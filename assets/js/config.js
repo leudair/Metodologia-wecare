@@ -1,0 +1,38 @@
+/*
+ * METODOLOGIA WECARE — configuração da landing page.
+ * Altere apenas este arquivo para ajustar vídeo, WhatsApp, Pixel e links.
+ */
+window.WECARE_CONFIG = {
+  // WhatsApp comercial oficial (somente números, com DDI + DDD). Ex.: "5547999999999"
+  whatsapp: {
+    number: "",
+    message: "Olá! Assisti à apresentação da Metodologia WeCare e quero falar com um especialista."
+  },
+
+  // Vídeo principal
+  // provider: "youtube" | "vimeo" | "html5"
+  //   youtube -> id: ID do vídeo (ex.: "dQw4w9WgXcQ")
+  //   vimeo   -> id: ID numérico do vídeo
+  //   html5   -> src: URL do MP4 (H.264/AAC) hospedado em CDN
+  video: {
+    provider: "html5",
+    id: "",
+    src: "",
+    poster: "assets/img/video-poster.jpg",
+    title: "Apresentação da Metodologia WeCare"
+  },
+
+  // Meta Pixel. Os eventos de vídeo só são enviados com o Pixel carregado.
+  pixel: {
+    id: "",
+    // LGPD: exige consentimento antes de carregar o Pixel
+    requireConsent: true
+  },
+
+  links: {
+    site: "https://www.wecaremidias.com.br",
+    instagram: "https://www.instagram.com/agencia.wecare/",
+    instagramHandle: "@agencia.wecare",
+    privacy: "privacidade.html"
+  }
+};
