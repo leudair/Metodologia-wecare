@@ -1,24 +1,32 @@
 /*
- * Mensuração: consentimento (LGPD), Meta Pixel e dataLayer.
- * Os eventos ficam em fila até o consentimento ser concedido e cada evento
- * de vídeo é enviado no máximo uma vez por carregamento de página.
+ * Mensuração e consentimento (LGPD).
+ * - Cookies necessários: apenas a escolha de consentimento (localStorage).
+ * - Mensuração e publicidade: Meta Pixel, carregado somente após autorização.
+ * Eventos ficam em fila até a decisão do visitante; se ele recusar, a fila é descartada.
+ * Cada evento marcado como `once` é enviado no máximo uma vez por carregamento de página.
  */
 (function () {
   "use strict";
 
   var cfg = (window.WECARE_CONFIG || {}).pixel || {};
-  var CONSENT_KEY = "wecare_consent";
+  var KEY = "wecare_consent";
+  var VERSION = 2; // aumente para pedir o consentimento novamente após mudar a política
   var queue = [];
   var sent = {};
   var pixelReady = false;
 
   window.dataLayer = window.dataLayer || [];
 
-  function readConsent() {
-    try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; }
+  function read() {
+    try {
+      var v = JSON.parse(localStorage.getItem(KEY) || "null");
+      return v && v.v === VERSION ? v : null;
+    } catch (e) { return null; }
   }
-  function writeConsent(v) {
-    try { localStorage.setItem(CONSENT_KEY, v); } catch (e) { /* modo privado */ }
+  function write(ads) {
+    var v = { v: VERSION, ads: !!ads, date: new Date().toISOString() };
+    try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) { /* modo privado */ }
+    return v;
   }
 
   function loadPixel() {
@@ -33,7 +41,6 @@
     window.fbq("init", cfg.id);
     window.fbq("track", "PageView");
     pixelReady = true;
-    flush();
   }
 
   function dispatch(evt) {
@@ -44,16 +51,28 @@
     window.dataLayer.push(Object.assign({ event: evt.name }, evt.params));
   }
 
-  function flush() {
-    while (queue.length) dispatch(queue.shift());
+  function allowed() {
+    if (!cfg.requireConsent) return true;
+    var c = read();
+    return !!(c && c.ads);
   }
 
-  function hasConsent() {
-    return !cfg.requireConsent || readConsent() === "granted";
+  function apply(consent) {
+    if (consent.ads) {
+      loadPixel();
+      while (queue.length) dispatch(queue.shift());
+    } else {
+      queue.length = 0;
+      // revogação: remove os cookies do Meta Pixel já gravados neste domínio
+      ["_fbp", "_fbc"].forEach(function (n) {
+        document.cookie = n + "=; Max-Age=0; path=/";
+        document.cookie = n + "=; Max-Age=0; path=/; domain=." + location.hostname.replace(/^www\./, "");
+      });
+    }
+    document.dispatchEvent(new CustomEvent("wecare:consent", { detail: consent }));
   }
 
   /**
-   * Envia um evento. `once` evita duplicidade na mesma página.
    * @param {string} name
    * @param {object} [params]
    * @param {{standard?: boolean, once?: boolean}} [opts]
@@ -65,29 +84,48 @@
       sent[name] = true;
     }
     var evt = { name: name, params: params || {}, standard: !!opts.standard };
-    if (hasConsent() && (pixelReady || !cfg.id)) dispatch(evt);
-    else if (readConsent() !== "denied") queue.push(evt);
+    if (allowed()) { loadPixel(); dispatch(evt); return; }
+    if (!read()) queue.push(evt); // ainda sem decisão: aguarda
   }
 
-  function initConsent() {
+  function init() {
     var bar = document.querySelector("[data-consent]");
-    var state = readConsent();
+    var dialog = document.querySelector("[data-consent-dialog]");
+    var adsBox = document.querySelector("[data-pref-ads]");
+    var current = read();
 
-    if (!cfg.requireConsent || state === "granted") { loadPixel(); flush(); return; }
-    if (state === "denied" || !bar) return;
-    if (!cfg.id) { flush(); return; } // sem Pixel configurado, não há o que consentir
+    function decide(ads) {
+      var c = write(ads);
+      if (bar) bar.hidden = true;
+      if (dialog && dialog.open) dialog.close();
+      apply(c);
+    }
+    function openPrefs() {
+      var c = read();
+      if (adsBox) adsBox.checked = !!(c && c.ads);
+      if (dialog && dialog.showModal) dialog.showModal();
+    }
 
-    bar.hidden = false;
-    bar.querySelector("[data-consent-accept]").addEventListener("click", function () {
-      writeConsent("granted"); bar.hidden = true; loadPixel(); flush();
-    });
-    bar.querySelector("[data-consent-deny]").addEventListener("click", function () {
-      writeConsent("denied"); bar.hidden = true; queue.length = 0;
+    if (!cfg.requireConsent) { loadPixel(); }
+    else if (current) { apply(current); }
+    else if (bar) { bar.hidden = false; }
+
+    if (bar) {
+      bar.querySelector("[data-consent-accept]").addEventListener("click", function () { decide(true); });
+      bar.querySelector("[data-consent-deny]").addEventListener("click", function () { decide(false); });
+      bar.querySelector("[data-consent-custom]").addEventListener("click", openPrefs);
+    }
+    if (dialog) {
+      dialog.querySelector("[data-prefs-save]").addEventListener("click", function () { decide(adsBox && adsBox.checked); });
+      dialog.querySelector("[data-prefs-deny]").addEventListener("click", function () { decide(false); });
+    }
+    document.querySelectorAll("[data-consent-open]").forEach(function (b) {
+      b.addEventListener("click", openPrefs);
     });
   }
 
-  window.WeCareTrack = { track: track };
+  window.WeCareTrack = { track: track, consent: read };
 
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initConsent);
-  else initConsent();
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
 })();

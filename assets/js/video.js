@@ -20,6 +20,11 @@
     if (window.WeCareTrack) window.WeCareTrack.track(name, params, { once: true });
   }
 
+  // avisa a interface (barra de progresso, mini player, tela final)
+  function emit(type, pct) {
+    document.dispatchEvent(new CustomEvent("wecare:video", { detail: { type: type, pct: pct || 0 } }));
+  }
+
   function createProgress() {
     var watched = 0;
     var last = null;
@@ -30,7 +35,10 @@
     return {
       play: function () {
         if (!started) { started = true; track("MetodologiaVideoPlay", base); }
+        emit("play");
       },
+      pause: function () { emit("pause"); },
+      ended: function () { emit("ended", 100); },
       // chamado periodicamente com o tempo atual e a duração
       tick: function (current, duration) {
         if (!duration || !isFinite(duration)) return;
@@ -40,6 +48,7 @@
         }
         last = current;
         var pct = (watched / duration) * 100;
+        emit("progress", Math.min(pct, 100));
         MILESTONES.forEach(function (m) {
           // 100% aceita pequena margem para créditos/arredondamento do player
           var target = m === 100 ? 97 : m;
@@ -75,7 +84,8 @@
     v.addEventListener("play", progress.play);
     v.addEventListener("timeupdate", function () { progress.tick(v.currentTime, v.duration); });
     v.addEventListener("seeking", progress.seek);
-    v.addEventListener("ended", function () { progress.tick(v.duration, v.duration); });
+    v.addEventListener("pause", function () { if (!v.ended) progress.pause(); });
+    v.addEventListener("ended", function () { progress.tick(v.duration, v.duration); progress.ended(); });
 
     var p = v.play();
     if (p && p.catch) p.catch(function () { /* o usuário usa os controles */ });
@@ -111,8 +121,8 @@
               }, 500);
             } else {
               clearInterval(timer);
-              if (e.data === S.ENDED) progress.tick(player.getDuration(), player.getDuration());
-              else progress.seek();
+              if (e.data === S.ENDED) { progress.tick(player.getDuration(), player.getDuration()); progress.ended(); }
+              else { progress.seek(); if (e.data === S.PAUSED) progress.pause(); }
             }
           }
         }
@@ -135,7 +145,8 @@
       player.on("play", progress.play);
       player.on("timeupdate", function (d) { progress.tick(d.seconds, d.duration); });
       player.on("seeked", progress.seek);
-      player.on("ended", function (d) { progress.tick(d.duration, d.duration); });
+      player.on("pause", progress.pause);
+      player.on("ended", function (d) { progress.tick(d.duration, d.duration); progress.ended(); });
     });
   }
 

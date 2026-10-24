@@ -11,24 +11,24 @@
   <meta property="og:description" content="Mais do que seguidores. Uma estratégia de crescimento, engajamento e posicionamento digital.">
   <meta property="og:image" content="assets/img/video-poster.jpg">
   <link rel="icon" href="assets/img/favicon.png">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preload" href="assets/fonts/inter-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="modulepreload" href="assets/vendor/three/three.module.min.js">
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
   <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+  <div class="grain" aria-hidden="true"></div>
 
   <header class="nav" id="topo">
     <div class="nav__inner">
       <a class="nav__logo" href="#topo" aria-label="Agência WeCare Digital — início">
-        <picture><source srcset="assets/img/logo-wecare.webp" type="image/webp"><img src="assets/img/logo-wecare.png" alt="Agência WeCare Digital" width="101" height="42" data-logo></picture>
+        <picture><source srcset="assets/img/logo-wecare.webp" type="image/webp"><img src="assets/img/logo-wecare.png" alt="Agência WeCare Digital" width="120" height="50" data-logo></picture>
       </a>
       <nav class="nav__links" aria-label="Seções">
+        <a href="#apresentacao">Apresentação</a>
         <a href="#conceito">Conceito</a>
         <a href="#como-funciona">Como funciona</a>
-        <a href="#modalidades">Modalidades</a>
+        <a href="#faq">Dúvidas</a>
       </nav>
       <a class="btn btn--ghost btn--sm" href="#" data-wa data-wa-origin="header">Atendimento</a>
     </div>
@@ -36,19 +36,21 @@
 
   <main id="conteudo">
 
-    <!-- SEÇÃO 01 — HERO -->
-    <section class="hero" aria-labelledby="hero-title">
+    <!-- SEÇÃO 01 — HERO + VÍDEO -->
+    <section class="hero" id="apresentacao" aria-labelledby="hero-title">
       <div class="hero__glow" aria-hidden="true"></div>
+      <div class="hero__floor" aria-hidden="true"></div>
       <div class="container hero__inner">
         <p class="eyebrow reveal">Apresentação exclusiva</p>
-        <h1 class="title-3d reveal" id="hero-title" data-tilt>
+        <h1 class="title-3d" id="hero-title" data-hero-title>
           <span class="title-3d__top">Metodologia</span>
-          <span class="title-3d__main" data-text="WECARE">WECARE</span>
+          <span class="title-3d__main" data-text="WECARE">WECARE<span class="hero3d" data-hero3d aria-hidden="true"></span></span>
         </h1>
         <p class="hero__sub reveal">Mais do que seguidores. Uma estratégia de crescimento, engajamento e posicionamento digital.</p>
 
-        <div class="video reveal" id="video">
+        <div class="video reveal" id="video" data-video-wrap>
           <div class="video__frame" data-video>
+            <span class="video__ring" aria-hidden="true"></span>
             <button class="video__cover" type="button" data-video-play aria-label="Assistir à apresentação da Metodologia WeCare">
               <img class="video__poster" src="assets/img/video-poster.jpg" alt="" loading="eager" fetchpriority="high" data-poster>
               <span class="video__play" aria-hidden="true">
@@ -56,11 +58,34 @@
               </span>
               <span class="video__label">Assistir à apresentação</span>
             </button>
+            <button class="video__undock" type="button" aria-label="Fechar mini player" data-video-undock>
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+            <div class="video__end" hidden data-video-end>
+              <p class="video__end-kicker">Apresentação concluída</p>
+              <p class="video__end-title">Agora você conhece a Metodologia WeCare.</p>
+              <div class="video__end-actions">
+                <a class="btn btn--primary" href="#" data-wa data-wa-origin="video_end">Falar com um especialista</a>
+                <button class="btn btn--ghost" type="button" data-video-end-close>Fechar</button>
+              </div>
+            </div>
           </div>
+        </div>
+
+        <div class="watch reveal" data-watch>
+          <div class="watch__bar" aria-hidden="true"><span data-watch-fill></span></div>
+          <p class="watch__text" data-watch-text aria-live="polite">Assista até o final para conhecer a estratégia completa.</p>
         </div>
         <p class="hero__note reveal">Conheça a estratégia desenvolvida a partir da experiência da Agência WeCare no mercado de redes sociais.</p>
       </div>
     </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Crescimento</span><i></i><span class="is-red">Engajamento</span><i></i><span>Posicionamento</span><i></i><span class="is-red">Metodologia WeCare</span><i></i>
+        <span>Crescimento</span><i></i><span class="is-red">Engajamento</span><i></i><span>Posicionamento</span><i></i><span class="is-red">Metodologia WeCare</span><i></i>
+      </div>
+    </div>
 
     <!-- SEÇÃO 02 — CONCEITO -->
     <section class="section" id="conceito" aria-labelledby="conceito-title">
@@ -69,23 +94,26 @@
         <h2 class="h2 reveal" id="conceito-title">Não basta crescer. <em>É preciso construir presença.</em></h2>
         <p class="lead reveal">Crescimento e engajamento precisam fazer parte de um planejamento. A Metodologia WeCare combina diferentes recursos de presença digital para estruturar a apresentação e a divulgação de conteúdos nas redes sociais.</p>
 
-        <ol class="pillars">
-          <li class="pillar reveal">
-            <span class="pillar__num">01</span>
+        <ul class="pillars">
+          <li class="pillar reveal" data-tilt-card>
+            <span class="pillar__glare" aria-hidden="true"></span>
+            <span class="pillar__num" aria-hidden="true">C</span>
             <h3 class="pillar__title">Crescimento</h3>
             <p>Planejamento da evolução e apresentação do perfil nas redes sociais.</p>
           </li>
-          <li class="pillar reveal">
-            <span class="pillar__num">02</span>
+          <li class="pillar reveal" data-tilt-card>
+            <span class="pillar__glare" aria-hidden="true"></span>
+            <span class="pillar__num" aria-hidden="true">E</span>
             <h3 class="pillar__title">Engajamento</h3>
             <p>Estratégias de interação e fortalecimento dos indicadores das publicações.</p>
           </li>
-          <li class="pillar reveal">
-            <span class="pillar__num">03</span>
+          <li class="pillar reveal" data-tilt-card>
+            <span class="pillar__glare" aria-hidden="true"></span>
+            <span class="pillar__num" aria-hidden="true">P</span>
             <h3 class="pillar__title">Posicionamento</h3>
             <p>Organização de conteúdos, presença digital e preparação de publicações para divulgação.</p>
           </li>
-        </ol>
+        </ul>
       </div>
     </section>
 
@@ -96,35 +124,40 @@
         <h2 class="h2 reveal" id="pratica-title">Uma estratégia. Diferentes etapas. <em>Um objetivo bem definido.</em></h2>
 
         <div class="practice" data-steps>
-          <div class="phone reveal" aria-hidden="true">
-            <div class="phone__body">
-              <div class="phone__notch"></div>
-              <div class="phone__screen" data-phone-step="1">
-                <div class="ig__head">
-                  <span class="ig__avatar"></span>
-                  <div class="ig__stats">
-                    <span><b>—</b>publicações</span>
-                    <span><b>—</b>seguidores</span>
-                    <span><b>—</b>seguindo</span>
+          <div class="stage" aria-hidden="true" data-stage>
+            <div class="phone">
+              <div class="phone__body">
+                <div class="phone__notch"></div>
+                <div class="phone__screen" data-phone-step="1">
+                  <div class="ig__head">
+                    <span class="ig__avatar"></span>
+                    <div class="ig__stats">
+                      <span><b>—</b>publicações</span>
+                      <span><b>—</b>seguidores</span>
+                      <span><b>—</b>seguindo</span>
+                    </div>
                   </div>
-                </div>
-                <div class="ig__bio"><i></i><i></i></div>
-                <div class="ig__grid">
-                  <span class="ig__tile is-pick"></span><span class="ig__tile"></span><span class="ig__tile is-pick"></span>
-                  <span class="ig__tile"></span><span class="ig__tile is-pick"></span><span class="ig__tile"></span>
-                  <span class="ig__tile"></span><span class="ig__tile"></span><span class="ig__tile"></span>
-                </div>
-                <div class="ig__post">
-                  <div class="ig__media"><span class="ig__sponsored">Patrocinado</span></div>
-                  <div class="ig__actions">
-                    <span><svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.5-9.3C1 8 3.5 4.5 7 4.5c2 0 3.5 1.1 5 3 1.5-1.9 3-3 5-3 3.5 0 6 3.5 4.5 7.2C19.5 16.4 12 21 12 21z"/></svg><b data-count="12480">0</b></span>
-                    <span><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg><b data-count="864">0</b></span>
-                    <span><svg viewBox="0 0 24 24"><path d="M3 11l18-8-8 18-2-8z"/></svg><b data-count="1290">0</b></span>
+                  <div class="ig__bio"><i></i><i></i></div>
+                  <div class="ig__grid">
+                    <span class="ig__tile is-pick"></span><span class="ig__tile"></span><span class="ig__tile is-pick"></span>
+                    <span class="ig__tile"></span><span class="ig__tile is-pick"></span><span class="ig__tile"></span>
+                    <span class="ig__tile"></span><span class="ig__tile"></span><span class="ig__tile"></span>
                   </div>
+                  <div class="ig__post">
+                    <div class="ig__media"><span class="ig__sponsored">Patrocinado</span></div>
+                    <div class="ig__actions">
+                      <span><svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.5-9.3C1 8 3.5 4.5 7 4.5c2 0 3.5 1.1 5 3 1.5-1.9 3-3 5-3 3.5 0 6 3.5 4.5 7.2C19.5 16.4 12 21 12 21z"/></svg><b data-count="12480">0</b></span>
+                      <span><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg><b data-count="864">0</b></span>
+                      <span><svg viewBox="0 0 24 24"><path d="M3 11l18-8-8 18-2-8z"/></svg><b data-count="1290">0</b></span>
+                    </div>
+                  </div>
+                  <span class="phone__demo">Interface conceitual · números ilustrativos</span>
                 </div>
-                <span class="phone__demo">Interface conceitual · números ilustrativos</span>
               </div>
             </div>
+            <span class="chip chip--1" data-chip="1">Seleção</span>
+            <span class="chip chip--2" data-chip="2">Engajamento</span>
+            <span class="chip chip--3" data-chip="3">Campanha</span>
           </div>
 
           <ol class="steps" role="tablist" aria-label="Etapas da Metodologia WeCare">
@@ -133,6 +166,7 @@
                 <span class="step__num">Etapa 01</span>
                 <span class="step__title">Seleção de conteúdos</span>
                 <span class="step__text">Identificar publicações relevantes para o posicionamento do perfil, incluindo conteúdos com potencial de utilização em campanhas.</span>
+                <span class="step__timer" aria-hidden="true"></span>
               </button>
             </li>
             <li>
@@ -140,6 +174,7 @@
                 <span class="step__num">Etapa 02</span>
                 <span class="step__title">Planejamento do engajamento</span>
                 <span class="step__text">Definir a distribuição dos serviços de visualizações, curtidas, comentários e compartilhamentos de acordo com a estratégia e o plano contratado.</span>
+                <span class="step__timer" aria-hidden="true"></span>
               </button>
             </li>
             <li>
@@ -147,6 +182,7 @@
                 <span class="step__num">Etapa 03</span>
                 <span class="step__title">Divulgação estratégica</span>
                 <span class="step__text">Apresentar a possibilidade de utilizar publicações existentes em campanhas de tráfego pago, preservando as interações visíveis compatíveis com a plataforma.</span>
+                <span class="step__timer" aria-hidden="true"></span>
               </button>
             </li>
           </ol>
@@ -155,48 +191,8 @@
       </div>
     </section>
 
-    <!-- SEÇÃO 04 — MODALIDADES -->
-    <section class="section" id="modalidades" aria-labelledby="modalidades-title">
-      <div class="container">
-        <p class="kicker reveal">Metodologia WeCare <span>/</span> Soluções</p>
-        <h2 class="h2 reveal" id="modalidades-title">Quatro estratégias. <em>Diferentes objetivos.</em></h2>
-        <p class="lead reveal">Conheça as modalidades da Metodologia WeCare e descubra qual estrutura faz mais sentido para seus objetivos.</p>
-
-        <div class="cards">
-          <article class="card reveal">
-            <span class="card__mark" aria-hidden="true">V</span>
-            <h3 class="card__name">WeCare <strong>Viral</strong></h3>
-            <p class="card__focus">Posicionamento e conteúdos em destaque</p>
-            <p class="card__text">Estratégia para criadores, influenciadores e perfis que desejam destacar publicações, incluindo a utilização de três Reels fixados.</p>
-            <a class="btn btn--ghost" href="#" data-wa data-wa-origin="card_viral" data-wa-plan="WeCare Viral">Conhecer o Viral</a>
-          </article>
-          <article class="card reveal">
-            <span class="card__mark" aria-hidden="true">S</span>
-            <h3 class="card__name">WeCare <strong>Start</strong></h3>
-            <p class="card__focus">Estrutura inicial de engajamento</p>
-            <p class="card__text">Modalidade direcionada a empreendedores que desejam trabalhar três publicações de maneira estratégica e considerar seu uso posterior em campanhas.</p>
-            <a class="btn btn--ghost" href="#" data-wa data-wa-origin="card_start" data-wa-plan="WeCare Start">Conhecer o Start</a>
-          </article>
-          <article class="card reveal">
-            <span class="card__mark" aria-hidden="true">M</span>
-            <h3 class="card__name">WeCare <strong>Max</strong></h3>
-            <p class="card__focus">Planejamento ampliado</p>
-            <p class="card__text">Modalidade com distribuição de serviços em nove publicações, permitindo uma estrutura mais abrangente de conteúdos para testes e divulgação.</p>
-            <a class="btn btn--ghost" href="#" data-wa data-wa-origin="card_max" data-wa-plan="WeCare Max">Conhecer o Max</a>
-          </article>
-          <article class="card reveal">
-            <span class="card__mark" aria-hidden="true">P</span>
-            <h3 class="card__name">WeCare <strong>Premium</strong></h3>
-            <p class="card__focus">Estratégia de maior abrangência</p>
-            <p class="card__text">Modalidade com possibilidade de trabalhar aproximadamente vinte publicações, conforme a configuração do plano.</p>
-            <a class="btn btn--ghost" href="#" data-wa data-wa-origin="card_premium" data-wa-plan="WeCare Premium">Conhecer o Premium</a>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- SEÇÃO 05 — AUTORIDADE E CONVERSÃO -->
-    <section class="section section--alt authority" id="agencia" aria-labelledby="agencia-title">
+    <!-- SEÇÃO 04 — AUTORIDADE E CONVERSÃO -->
+    <section class="section authority" id="agencia" aria-labelledby="agencia-title">
       <div class="container">
         <p class="kicker reveal">A experiência por trás da Metodologia WeCare</p>
         <h2 class="h2 reveal" id="agencia-title">A estratégia por trás de uma agência <em>que aplica o que apresenta.</em></h2>
@@ -233,6 +229,52 @@
         </div>
       </div>
     </section>
+
+    <!-- SEÇÃO 05 — FAQ -->
+    <section class="section section--alt" id="faq" aria-labelledby="faq-title">
+      <div class="container faq">
+        <div class="faq__head">
+          <p class="kicker reveal">Metodologia WeCare <span>/</span> Dúvidas frequentes</p>
+          <h2 class="h2 reveal" id="faq-title">Perguntas <em>frequentes.</em></h2>
+          <p class="lead reveal">Ainda ficou alguma dúvida depois do vídeo? Fale com a nossa equipe.</p>
+          <a class="btn btn--ghost reveal" href="#" data-wa data-wa-origin="faq">Falar com a equipe</a>
+        </div>
+        <div class="faq__list">
+          <details class="qa reveal">
+            <summary>O que é a Metodologia WeCare?</summary>
+            <p>É a metodologia comercial da Agência WeCare Digital. Ela combina diferentes recursos de presença digital para estruturar a apresentação e a divulgação de conteúdos nas redes sociais, trabalhando crescimento, engajamento e posicionamento dentro de um planejamento.</p>
+          </details>
+          <details class="qa reveal">
+            <summary>Por que assistir à apresentação completa?</summary>
+            <p>O vídeo explica a estratégia do início ao fim: como os conteúdos são selecionados, como o engajamento é planejado e como as publicações podem ser usadas em divulgação. Assistindo até o final, você chega à conversa com a nossa equipe sabendo exatamente o que procura.</p>
+          </details>
+          <details class="qa reveal">
+            <summary>A metodologia é apenas ganhar seguidores?</summary>
+            <p>Não. Os recursos de crescimento e engajamento fazem parte de um planejamento que também envolve a organização dos conteúdos e o posicionamento do perfil. A distribuição dos serviços é definida de acordo com a estratégia e o plano contratado.</p>
+          </details>
+          <details class="qa reveal">
+            <summary>As publicações podem ser usadas em campanhas de tráfego pago?</summary>
+            <p>Existe a possibilidade de utilizar publicações existentes em campanhas, preservando as interações visíveis compatíveis com a plataforma. A configuração e os resultados das campanhas dependem de fatores como segmentação, conteúdo, investimento e qualidade da oferta.</p>
+          </details>
+          <details class="qa reveal">
+            <summary>Existe garantia de resultados?</summary>
+            <p>Não prometemos resultados específicos. O desempenho nas redes sociais depende de diversos fatores, incluindo o conteúdo publicado, o público, as regras de cada plataforma e o investimento em divulgação.</p>
+          </details>
+          <details class="qa reveal">
+            <summary>Como sei qual estrutura é ideal para mim?</summary>
+            <p>Depois de assistir à apresentação, fale com um especialista pelo WhatsApp. A equipe entende seus objetivos e indica a modalidade da Metodologia WeCare mais adequada.</p>
+          </details>
+          <details class="qa reveal">
+            <summary>A WeCare atende fora do Brasil?</summary>
+            <p>Sim. Além do Brasil, a Agência WeCare Digital atua com clientes nos Estados Unidos, no Canadá e na Europa.</p>
+          </details>
+          <details class="qa reveal">
+            <summary>Como meus dados são usados nesta página?</summary>
+            <p>Usamos cookies de mensuração apenas com a sua autorização, para entender como a apresentação é assistida. Veja os detalhes na <a href="cookies.html">Política de Cookies</a> e na <a href="privacidade.html">Política de Privacidade</a>.</p>
+          </details>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
@@ -243,23 +285,57 @@
         <a href="https://www.wecaremidias.com.br" target="_blank" rel="noopener" data-link="site">Site institucional</a>
         <a href="https://www.instagram.com/agencia.wecare/" target="_blank" rel="noopener" data-link="instagram">Instagram</a>
         <a href="#" data-wa data-wa-origin="footer">WhatsApp</a>
-        <a href="privacidade.html" data-link="privacy">Privacidade</a>
+      </nav>
+      <nav class="footer__links footer__links--legal" aria-label="Informações legais">
+        <a href="termos.html">Termos de Uso</a>
+        <a href="privacidade.html">Política de Privacidade</a>
+        <a href="cookies.html">Política de Cookies</a>
+        <button type="button" class="linklike" data-consent-open>Preferências de cookies</button>
       </nav>
       <p class="footer__legal">© <span data-year></span> Agência WeCare Digital. Todos os direitos reservados.</p>
     </div>
   </footer>
 
-  <div class="consent" role="dialog" aria-live="polite" aria-label="Preferências de privacidade" hidden data-consent>
-    <p>Usamos cookies de mensuração para entender como a apresentação é assistida. <a href="privacidade.html">Saiba mais</a>.</p>
+  <!-- Consentimento de cookies (LGPD) -->
+  <div class="consent" role="region" aria-label="Aviso de cookies" hidden data-consent>
+    <p class="consent__title">Sua privacidade</p>
+    <p>Usamos cookies necessários para o funcionamento da página e, com a sua autorização, cookies de mensuração e publicidade (Meta Pixel) para entender como a apresentação é assistida e mostrar comunicações relevantes. <a href="cookies.html">Política de Cookies</a>.</p>
     <div class="consent__actions">
+      <button class="btn btn--ghost btn--sm" type="button" data-consent-custom>Personalizar</button>
       <button class="btn btn--ghost btn--sm" type="button" data-consent-deny>Recusar</button>
-      <button class="btn btn--primary btn--sm" type="button" data-consent-accept>Aceitar</button>
+      <button class="btn btn--primary btn--sm" type="button" data-consent-accept>Aceitar todos</button>
     </div>
   </div>
+
+  <dialog class="prefs" aria-labelledby="prefs-title" data-consent-dialog>
+    <form method="dialog" class="prefs__inner">
+      <h2 class="prefs__title" id="prefs-title">Preferências de cookies</h2>
+      <p class="prefs__intro">Escolha quais categorias você autoriza. Você pode mudar sua escolha a qualquer momento pelo link no rodapé.</p>
+      <div class="pref">
+        <div>
+          <p class="pref__name">Necessários</p>
+          <p class="pref__desc">Guardam a sua escolha sobre cookies e garantem o funcionamento básico da página. Não podem ser desativados.</p>
+        </div>
+        <span class="pref__always">Sempre ativos</span>
+      </div>
+      <div class="pref">
+        <div>
+          <label class="pref__name" for="pref-ads">Mensuração e publicidade</label>
+          <p class="pref__desc">Meta Pixel: registra o início e o progresso da apresentação (25%, 50%, 75% e 100%) e cliques de contato, para medir o interesse e exibir anúncios a quem assistiu.</p>
+        </div>
+        <input class="switch" type="checkbox" id="pref-ads" data-pref-ads>
+      </div>
+      <div class="prefs__actions">
+        <button class="btn btn--ghost btn--sm" type="button" data-prefs-deny>Recusar todos</button>
+        <button class="btn btn--primary btn--sm" type="button" data-prefs-save>Salvar preferências</button>
+      </div>
+    </form>
+  </dialog>
 
   <script src="assets/js/config.js"></script>
   <script src="assets/js/tracking.js" defer></script>
   <script src="assets/js/video.js" defer></script>
   <script src="assets/js/main.js" defer></script>
+  <script type="module" src="assets/js/hero3d.js"></script>
 </body>
 </html>

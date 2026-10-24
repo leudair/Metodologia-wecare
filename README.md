@@ -5,9 +5,14 @@ Landing page da **Metodologia WeCare** (Agência WeCare Digital). Site estático
 ## Estrutura
 
 ```
-index.html            Página principal (5 seções)
-privacidade.html      Aviso de privacidade
+index.html            Página principal (Apresentação + vídeo, Conceito, Como funciona, Agência + CTA, FAQ)
+termos.html           Termos de Uso
+privacidade.html      Política de Privacidade (LGPD)
+cookies.html          Política de Cookies
 assets/css/styles.css Design system e layout
+assets/js/hero3d.js   Título WECARE em 3D real (WebGL/three.js, com fallback em CSS)
+assets/vendor/three/  three.js r160 (MIT) + fonte 3D gerada a partir do Inter Black
+assets/fonts/         Inter (SIL OFL) hospedada localmente, sem Google Fonts
 assets/js/config.js   ← Configuração (vídeo, WhatsApp, Pixel, links)
 assets/js/tracking.js Consentimento + Meta Pixel + dataLayer
 assets/js/video.js    Player (YouTube, Vimeo ou MP4) + eventos de visualização
@@ -43,7 +48,9 @@ Depois de inserir a logo, confirme o vermelho institucional em `--red` (`assets/
 | `MetodologiaVideo100` | 97% ou mais do vídeo efetivamente assistido |
 | `Contact` (padrão) | Clique em qualquer botão de WhatsApp |
 
-Cada evento é enviado uma vez por carregamento de página. O carregamento da página não gera nenhum evento de vídeo.
+Cada evento é enviado uma vez por carregamento de página. Nenhum evento sai antes do consentimento: o visitante escolhe entre Aceitar todos, Recusar ou Personalizar, e pode mudar a escolha em "Preferências de cookies" no rodapé. Ao revogar, os cookies `_fbp`/`_fbc` são removidos.
+
+Recursos para incentivar a visualização completa: barra de progresso abaixo do vídeo, mini player fixo quando o visitante rola a página com o vídeo tocando e tela final com o botão de WhatsApp. O carregamento da página não gera nenhum evento de vídeo.
 
 Para criar públicos no Gerenciador de Eventos, use *Público personalizado → Website → Eventos → MetodologiaVideo100*. A elegibilidade depende das regras da Meta, do consentimento do visitante e do tamanho mínimo do público.
 

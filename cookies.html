@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Política de Cookies — Metodologia WeCare</title>
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" href="assets/img/favicon.png">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header class="nav">
+    <div class="nav__inner">
+      <a class="nav__logo" href="index.html" aria-label="Voltar para a Metodologia WeCare">
+        <img src="assets/img/logo-wecare.webp" alt="Agência WeCare Digital" width="120" height="50" data-logo>
+      </a>
+      <a class="btn btn--ghost btn--sm" href="index.html">Voltar à apresentação</a>
+    </div>
+  </header>
+  <main class="container legal">
+    <div class="legal__body">
+      <p class="kicker">Metodologia WeCare <span>/</span> Política de Cookies</p>
+      <h1>Política de Cookies</h1>
+      <p class="legal__date">Última atualização: 24 de outubro de 2026</p>
+      <p>Cookies são pequenos arquivos gravados no seu navegador. Tecnologias semelhantes, como o armazenamento local do navegador e pixels, funcionam de forma parecida. Esta Política explica quais usamos na página da Metodologia WeCare e como você controla cada um.</p>
+
+      <h2>1. Como pedimos o seu consentimento</h2>
+      <p>Na primeira visita, exibimos um aviso com as opções <strong>Aceitar todos</strong>, <strong>Recusar</strong> e <strong>Personalizar</strong>. Nenhum cookie de mensuração ou publicidade é carregado antes da sua escolha. Se você recusar, a página continua funcionando normalmente, inclusive o vídeo.</p>
+
+      <h2>2. Categorias</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Categoria</th><th>Nome</th><th>Finalidade</th><th>Duração</th></tr></thead>
+          <tbody>
+            <tr><td>Necessário</td><td>wecare_consent (armazenamento local)</td><td>Guardar a sua escolha sobre cookies.</td><td>Até você limpar os dados do navegador</td></tr>
+            <tr><td>Mensuração e publicidade</td><td>_fbp (Meta)</td><td>Identificar o navegador para medir o interesse na apresentação e exibir anúncios a quem assistiu.</td><td>90 dias</td></tr>
+            <tr><td>Mensuração e publicidade</td><td>_fbc (Meta)</td><td>Registrar o clique em um anúncio da Meta que trouxe você até a página.</td><td>90 dias</td></tr>
+            <tr><td>Mensuração e publicidade</td><td>Meta Pixel (fbevents.js)</td><td>Enviar os eventos de início, 25%, 50%, 75% e 100% da apresentação e cliques de contato.</td><td>Não grava cookie próprio</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>3. Vídeo de apresentação</h2>
+      <p>O player do vídeo só é carregado quando você clica para assistir. Dependendo da plataforma de hospedagem (por exemplo, YouTube em modo de privacidade aprimorada ou Vimeo com rastreamento desativado), o próprio player pode gravar cookies técnicos necessários à reprodução.</p>
+
+      <h2>4. Como mudar ou revogar sua escolha</h2>
+      <p>Clique em "Preferências de cookies" no rodapé de qualquer página. Ao revogar, removemos os cookies da Meta gravados neste domínio e deixamos de enviar eventos. Você também pode apagar cookies nas configurações do seu navegador.</p>
+
+      <h2>5. Mais informações</h2>
+      <p>Veja também a nossa <a href="privacidade.html">Política de Privacidade</a> e a política de dados da Meta em <a href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener">facebook.com/privacy/policy</a>.</p>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container footer__inner">
+      <nav class="footer__links footer__links--legal" aria-label="Informações legais">
+        <a href="termos.html">Termos de Uso</a>
+        <a href="privacidade.html">Política de Privacidade</a>
+        <a href="cookies.html">Política de Cookies</a>
+        <button type="button" class="linklike" data-consent-open>Preferências de cookies</button>
+      </nav>
+      <p class="footer__legal">© <span data-year></span> Agência WeCare Digital. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+  <dialog class="prefs" aria-labelledby="prefs-title" data-consent-dialog>
+    <form method="dialog" class="prefs__inner">
+      <h2 class="prefs__title" id="prefs-title">Preferências de cookies</h2>
+      <p class="prefs__intro">Escolha quais categorias você autoriza. Você pode mudar sua escolha a qualquer momento.</p>
+      <div class="pref">
+        <div>
+          <p class="pref__name">Necessários</p>
+          <p class="pref__desc">Guardam a sua escolha sobre cookies e garantem o funcionamento básico da página. Não podem ser desativados.</p>
+        </div>
+        <span class="pref__always">Sempre ativos</span>
+      </div>
+      <div class="pref">
+        <div>
+          <label class="pref__name" for="pref-ads">Mensuração e publicidade</label>
+          <p class="pref__desc">Meta Pixel: registra o início e o progresso da apresentação e cliques de contato, para medir o interesse e exibir anúncios a quem assistiu.</p>
+        </div>
+        <input class="switch" type="checkbox" id="pref-ads" data-pref-ads>
+      </div>
+      <div class="prefs__actions">
+        <button class="btn btn--ghost btn--sm" type="button" data-prefs-deny>Recusar todos</button>
+        <button class="btn btn--primary btn--sm" type="button" data-prefs-save>Salvar preferências</button>
+      </div>
+    </form>
+  </dialog>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/tracking.js" defer></script>
+  <script>document.querySelectorAll("[data-year]").forEach(function (e) { e.textContent = new Date().getFullYear(); });</script>
+</body>
+</html>
