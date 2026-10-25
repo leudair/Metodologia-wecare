@@ -28,6 +28,7 @@
   function createProgress() {
     var watched = 0;
     var last = null;
+    var lastWall = 0;
     var reached = {};
     var started = false;
     var base = { video_title: cfg.title || "Metodologia WeCare", video_provider: cfg.provider };
@@ -42,11 +43,17 @@
       // chamado periodicamente com o tempo atual e a duração
       tick: function (current, duration) {
         if (!duration || !isFinite(duration)) return;
+        var now = Date.now();
         if (last !== null) {
           var delta = current - last;
-          if (delta > 0 && delta < 2.5) watched += delta; // ignora saltos
+          // limite proporcional ao tempo real decorrido (até 2x de velocidade):
+          // avanços maiores que isso são saltos na linha do tempo e não contam,
+          // mas checagens atrasadas pelo navegador (aba em segundo plano) contam normalmente
+          var allowed = ((now - lastWall) / 1000) * 2 + 1;
+          if (delta > 0 && delta <= allowed) watched += delta;
         }
         last = current;
+        lastWall = now;
         var pct = (watched / duration) * 100;
         emit("progress", Math.min(pct, 100));
         MILESTONES.forEach(function (m) {
@@ -115,6 +122,7 @@
             var S = window.YT.PlayerState;
             if (e.data === S.PLAYING) {
               progress.play();
+              progress.tick(player.getCurrentTime(), player.getDuration()); // marca o ponto de partida
               clearInterval(timer);
               timer = setInterval(function () {
                 progress.tick(player.getCurrentTime(), player.getDuration());

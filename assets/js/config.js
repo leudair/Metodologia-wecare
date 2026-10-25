@@ -15,8 +15,8 @@ window.WECARE_CONFIG = {
   //   vimeo   -> id: ID numérico do vídeo
   //   html5   -> src: URL do MP4 (H.264/AAC) hospedado em CDN
   video: {
-    provider: "html5",
-    id: "",
+    provider: "youtube",
+    id: "WuNn1HCH6HU", // https://youtu.be/WuNn1HCH6HU (não listado, 14:38)
     src: "",
     poster: "assets/img/video-poster.jpg",
     title: "Apresentação da Metodologia WeCare"
