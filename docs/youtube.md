@@ -19,6 +19,7 @@ Assista até o final e fale com um especialista para descobrir a estrutura mais 
 🔗 Página oficial da Metodologia WeCare:
 https://metodologiawecare.com.br/?utm_source=youtube&utm_medium=video&utm_campaign=metodologia_wecare
 
+💬 WhatsApp: https://wa.me/5547992626235
 📲 Instagram: https://www.instagram.com/agencia.wecare/
 🌐 Site institucional: https://www.wecaremidias.com.br
 

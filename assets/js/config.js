@@ -5,7 +5,7 @@
 window.WECARE_CONFIG = {
   // WhatsApp comercial oficial (somente números, com DDI + DDD). Ex.: "5547999999999"
   whatsapp: {
-    number: "",
+    number: "5547992626235", // (47) 99262-6235
     message: "Olá! Assisti à apresentação da Metodologia WeCare e quero falar com um especialista."
   },
 
