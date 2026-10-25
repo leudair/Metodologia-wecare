@@ -24,7 +24,8 @@ window.WECARE_CONFIG = {
 
   // Meta Pixel. Os eventos de vídeo só são enviados com o Pixel carregado.
   pixel: {
-    id: "",
+    // "Pixel LP" — BM WeCare-Matriz2
+    id: "1754238335547745",
     // LGPD: exige consentimento antes de carregar o Pixel
     requireConsent: true
   },

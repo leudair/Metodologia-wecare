@@ -44,7 +44,7 @@ Depois de inserir a logo, confirme o vermelho institucional em `--red` (`assets/
 | Evento | Quando |
 |---|---|
 | `MetodologiaVideoPlay` | Primeira reprodução |
-| `MetodologiaVideo25` / `50` / `75` | Tempo **efetivamente assistido**; saltos na linha do tempo não contam |
+| `MetodologiaVideo10` / `25` / `50` / `75` | Tempo **efetivamente assistido**; saltos na linha do tempo não contam |
 | `MetodologiaVideo100` | 97% ou mais do vídeo efetivamente assistido |
 | `Contact` (padrão) | Clique em qualquer botão de WhatsApp |
 

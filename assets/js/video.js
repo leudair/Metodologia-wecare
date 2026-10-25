@@ -4,8 +4,8 @@
  * reprodução com áudio por interação do usuário e carregamento inicial rápido.
  *
  * Eventos (enviados uma vez por página):
- *   MetodologiaVideoPlay, MetodologiaVideo25, MetodologiaVideo50,
- *   MetodologiaVideo75, MetodologiaVideo100
+ *   MetodologiaVideoPlay, MetodologiaVideo10, MetodologiaVideo25,
+ *   MetodologiaVideo50, MetodologiaVideo75, MetodologiaVideo100
  *
  * Os marcos usam o tempo efetivamente assistido (saltos na linha do tempo
  * não contam), evitando registrar conclusão sem consumo real do conteúdo.
@@ -14,7 +14,7 @@
   "use strict";
 
   var cfg = (window.WECARE_CONFIG || {}).video || {};
-  var MILESTONES = [25, 50, 75, 100];
+  var MILESTONES = [10, 25, 50, 75, 100];
 
   function track(name, params) {
     if (window.WeCareTrack) window.WeCareTrack.track(name, params, { once: true });
