@@ -14,6 +14,15 @@
   "use strict";
 
   var cfg = (window.WECARE_CONFIG || {}).video || {};
+
+  // Versão em pé (9:16) para celular na vertical, quando configurada.
+  // A escolha é feita no carregamento para o layout não pular depois.
+  var vcfg = cfg.vertical || {};
+  var useVertical = !!(vcfg.id || vcfg.src) &&
+    window.matchMedia("(max-width: 760px) and (orientation: portrait)").matches;
+  if (useVertical) {
+    cfg = Object.assign({}, cfg, vcfg, { provider: vcfg.provider || cfg.provider });
+  }
   var MILESTONES = [10, 25, 50, 75, 100];
 
   function track(name, params) {
@@ -31,7 +40,7 @@
     var lastWall = 0;
     var reached = {};
     var started = false;
-    var base = { video_title: cfg.title || "Metodologia WeCare", video_provider: cfg.provider };
+    var base = { video_title: cfg.title || "Metodologia WeCare", video_provider: cfg.provider, video_format: useVertical ? "vertical" : "horizontal" };
 
     return {
       play: function () {
@@ -169,6 +178,10 @@
     var cover = frame.querySelector("[data-video-play]");
     var poster = frame.querySelector("[data-poster]");
 
+    if (useVertical) {
+      var wrap = frame.closest("[data-video-wrap]");
+      if (wrap) wrap.classList.add("video--vertical");
+    }
     if (cfg.poster && poster) poster.src = cfg.poster;
     if (poster) poster.addEventListener("error", function () { poster.remove(); });
 

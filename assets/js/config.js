@@ -19,7 +19,13 @@ window.WECARE_CONFIG = {
     id: "WuNn1HCH6HU", // https://youtu.be/WuNn1HCH6HU (não listado, 14:38)
     src: "",
     poster: "assets/img/video-poster.jpg",
-    title: "Apresentação da Metodologia WeCare"
+    title: "Apresentação da Metodologia WeCare",
+
+    // Versão em pé (9:16), exibida no celular na vertical. Deixe id vazio para usar a horizontal em todos.
+    vertical: {
+      id: "",
+      poster: "assets/img/video-poster-vertical.jpg"
+    }
   },
 
   // Meta Pixel. Os eventos de vídeo só são enviados com o Pixel carregado.

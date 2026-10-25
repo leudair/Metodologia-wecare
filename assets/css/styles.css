@@ -261,6 +261,9 @@ h1, h2, h3 { text-wrap: balance; }
   box-shadow: 0 30px 80px -20px rgba(0,0,0,.9), 0 0 0 1px var(--line-strong);
 }
 .video__frame.is-docked .video__undock { display: grid; }
+/* versão em pé no celular: ocupa a altura da tela sem cortar */
+.video.video--vertical { aspect-ratio: 9 / 16; width: min(100%, calc(80svh * 9 / 16)); margin-left: auto; margin-right: auto; }
+.video--vertical .video__frame.is-docked { width: min(150px, 36vw); aspect-ratio: 9 / 16; }
 /* perspective/transform no pai criariam um contexto que prende o position: fixed */
 .video.is-docking { perspective: none; transform: none !important; }
 @keyframes dock { from { opacity: 0; transform: translateY(20px) scale(.96); } }
