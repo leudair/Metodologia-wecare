@@ -85,7 +85,32 @@
 
   /* ---------- Vídeo: progresso, mini player e tela final ---------- */
   var watch = document.querySelector("[data-watch]");
-  var fill = document.querySelector("[data-watch-fill]");
+  var ring = document.querySelector("[data-ring]");
+  var ringFill = document.querySelector("[data-ring-fill]");
+  var ringTrack = document.querySelector("[data-ring-track]");
+
+  /* Contorno do vídeo que se completa conforme a apresentação é assistida.
+     O traçado começa no meio da borda superior e segue no sentido horário. */
+  function drawRing() {
+    if (!ring || !frame) return;
+    var w = frame.clientWidth, h = frame.clientHeight;
+    var r = parseFloat(getComputedStyle(frame).borderTopLeftRadius) || 0;
+    var o = 3; // a linha fica um pouco por fora da borda do vídeo
+    var W = w + o * 2, H = h + o * 2, R = Math.min(r + o, W / 2, H / 2);
+    ring.setAttribute("viewBox", "0 0 " + W + " " + H);
+    var d = "M" + W / 2 + " 1.5" +
+      " H" + (W - R) + " A" + (R - 1.5) + " " + (R - 1.5) + " 0 0 1 " + (W - 1.5) + " " + R +
+      " V" + (H - R) + " A" + (R - 1.5) + " " + (R - 1.5) + " 0 0 1 " + (W - R) + " " + (H - 1.5) +
+      " H" + R + " A" + (R - 1.5) + " " + (R - 1.5) + " 0 0 1 1.5 " + (H - R) +
+      " V" + R + " A" + (R - 1.5) + " " + (R - 1.5) + " 0 0 1 " + R + " 1.5 Z";
+    ringFill.setAttribute("d", d);
+    ringTrack.setAttribute("d", d);
+  }
+  function setRing(pct) {
+    if (ringFill) ringFill.style.strokeDashoffset = String(100 - Math.min(Math.max(pct, 0), 100));
+  }
+  if (ring && "ResizeObserver" in window) new ResizeObserver(drawRing).observe(frame);
+  drawRing();
   var watchText = document.querySelector("[data-watch-text]");
   var endScreen = document.querySelector("[data-video-end]");
   var playing = false;
@@ -119,16 +144,17 @@
       playing = true;
       if (endScreen) endScreen.hidden = true;
       if (watch) watch.classList.add("is-active");
+      if (ring) ring.classList.add("is-active");
     }
     if (d.type === "pause") playing = false;
-    if (d.type === "progress" && fill && !finished) {
-      fill.style.width = d.pct.toFixed(1) + "%";
+    if (d.type === "progress" && !finished) {
+      setRing(d.pct);
       if (watchText) watchText.textContent = "Você assistiu " + Math.floor(d.pct) + "% da apresentação";
     }
     if (d.type === "ended") {
       playing = false;
       finished = true;
-      if (fill) fill.style.width = "100%";
+      setRing(100);
       if (watch) watch.classList.add("is-done");
       if (watchText) watchText.textContent = "Apresentação concluída. Fale com um especialista.";
       if (endScreen) endScreen.hidden = false;
