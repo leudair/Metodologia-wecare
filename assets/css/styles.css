@@ -78,6 +78,21 @@ h1, h2, h3 { text-wrap: balance; }
 }
 .btn--primary:hover { background: linear-gradient(180deg, #E6343B 0%, var(--red-hi) 55%, #B9151C 100%); }
 .btn--primary:active { transform: translateY(4px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 0 0 #6E0A0E, 0 2px 6px rgba(0, 0, 0, .45); }
+/* botão branco com filete vermelho aceso em volta, como um LED */
+.btn--led {
+  color: #141416; font-weight: 700;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F1F1F4 60%, #DEDEE3 100%);
+  border-color: var(--red-hi);
+  box-shadow:
+    0 0 0 1px rgba(227, 38, 45, .55), 0 0 10px rgba(227, 38, 45, .65), 0 0 22px rgba(227, 38, 45, .3),
+    inset 0 1px 0 #FFFFFF, 0 4px 0 #A9A9B1, 0 8px 16px rgba(0, 0, 0, .5);
+}
+.btn--led:hover { background: linear-gradient(180deg, #FFFFFF 0%, #F7F7F9 60%, #E6E6EB 100%); }
+.btn--led:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 1px rgba(227, 38, 45, .55), 0 0 10px rgba(227, 38, 45, .65), 0 0 22px rgba(227, 38, 45, .3),
+    inset 0 1px 0 #FFFFFF, 0 0 0 #A9A9B1, 0 2px 6px rgba(0, 0, 0, .5);
+}
 .btn--ghost { border-color: rgba(245, 245, 247, 0.3); color: var(--white); background: transparent; }
 .btn--ghost:hover { border-color: var(--white); }
 .btn--ghost:active { transform: translateY(1px); }
@@ -98,7 +113,7 @@ h1, h2, h3 { text-wrap: balance; }
   display: flex; align-items: center; justify-content: space-between; gap: 24px;
 }
 .nav__logo { text-decoration: none; }
-.nav__logo img { height: 46px; width: auto; }
+.nav__logo img { height: 52px; width: auto; }
 .nav__links { display: flex; gap: 10px; }
 .nav__links a {
   display: inline-flex; align-items: center; min-height: 36px; padding: 0 16px; border-radius: 999px;
@@ -372,7 +387,7 @@ h1, h2, h3 { text-wrap: balance; }
   :root { --gutter: 20px; --nav-h: 60px; }
   body { font-size: 16px; }
   .nav__links { display: none; }
-  .nav__logo img { height: 38px; }
+  .nav__logo img { height: 42px; }
   .hero { padding-top: calc(var(--nav-h) + 36px); }
   .title-3d__top { letter-spacing: .05em; }
   .title-3d__main { text-shadow: 0 1px 0 #96000B, 0 2px 0 #8A0009, 0 3px 0 #720007, 0 4px 0 #5A0006, 0 12px 24px rgba(0, 0, 0, .6); }
