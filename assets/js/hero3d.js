@@ -111,10 +111,9 @@ async function init() {
     const intro = reduceMotion ? 1 : ease(Math.min(t / 1.6, 1));
     const scroll = Math.min(window.scrollY / window.innerHeight, 1);
 
-    const idleY = reduceMotion ? 0 : Math.sin(t * 0.5) * 0.1;
-    const idleX = reduceMotion ? 0 : Math.sin(t * 0.37) * 0.04;
-    const targetY = idleY + mx * 0.5 + (1 - intro) * -1.1;
-    const targetX = idleX + my * 0.25 + scroll * 0.55 + (1 - intro) * 0.35;
+    // uma entrada única; depois o título só responde ao cursor e à rolagem
+    const targetY = mx * 0.3 + (1 - intro) * -1.1;
+    const targetX = my * 0.15 + scroll * 0.35 + (1 - intro) * 0.35;
     rx += (targetX - rx) * 0.07;
     ry += (targetY - ry) * 0.07;
     group.rotation.set(rx, ry, 0);

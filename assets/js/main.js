@@ -5,9 +5,6 @@
   "use strict";
 
   var cfg = window.WECARE_CONFIG || {};
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-  var clamp = function (v, a, b) { return Math.min(Math.max(v, a), b); };
 
   /* ---------- Logo: fallback textual se o arquivo oficial não carregar ---------- */
   document.querySelectorAll("[data-logo]").forEach(function (img) {
@@ -83,78 +80,8 @@
     });
   }
 
-  /* ---------- Animações de entrada ---------- */
-  var reveals = document.querySelectorAll(".reveal");
-  if (reduceMotion || !("IntersectionObserver" in window)) {
-    reveals.forEach(function (el) { el.classList.add("is-in"); });
-  } else {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        var el = entry.target;
-        var siblings = el.parentElement ? el.parentElement.querySelectorAll(":scope > .reveal") : [];
-        var index = Array.prototype.indexOf.call(siblings, el);
-        el.style.transitionDelay = clamp(index, 0, 4) * 80 + "ms";
-        el.classList.add("is-in");
-        io.unobserve(el);
-      });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
-    reveals.forEach(function (el) { io.observe(el); });
-  }
-
-  /* ---------- Efeitos ligados à rolagem ---------- */
   var videoWrap = document.querySelector("[data-video-wrap]");
   var frame = document.querySelector("[data-video]");
-  var stage = document.querySelector("[data-stage]");
-  var phone = stage && stage.querySelector(".phone");
-  var mobile = window.matchMedia("(max-width: 760px)").matches;
-
-  function onScroll() {
-    var vh = window.innerHeight;
-    // vídeo: começa inclinado e "deita" na tela conforme entra
-    if (videoWrap && frame && !frame.classList.contains("is-docked")) {
-      var r = videoWrap.getBoundingClientRect();
-      var p = clamp((vh - r.top) / (vh * 0.75), 0, 1);
-      frame.style.setProperty("--vx", ((1 - p) * (mobile ? 10 : 18)).toFixed(2) + "deg");
-      frame.style.setProperty("--vs", (0.92 + p * 0.08).toFixed(3));
-    }
-    // celular: gira de lado para frente
-    if (phone) {
-      var s = stage.getBoundingClientRect();
-      var q = clamp((vh - s.top) / (vh * 0.9), 0, 1);
-      phone.style.setProperty("--py", ((1 - q) * -28 + 6 * q - 6).toFixed(2) + "deg");
-      phone.style.setProperty("--px", ((1 - q) * 14 + 4 * q).toFixed(2) + "deg");
-    }
-  }
-  if (!reduceMotion) {
-    var ticking = false;
-    window.addEventListener("scroll", function () {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () { onScroll(); ticking = false; });
-    }, { passive: true });
-    window.addEventListener("resize", onScroll);
-    onScroll();
-  }
-
-  /* ---------- Cartões 3D com brilho seguindo o cursor ---------- */
-  if (finePointer && !reduceMotion) {
-    document.querySelectorAll("[data-tilt-card]").forEach(function (card) {
-      card.addEventListener("pointermove", function (e) {
-        var r = card.getBoundingClientRect();
-        var x = (e.clientX - r.left) / r.width;
-        var y = (e.clientY - r.top) / r.height;
-        card.style.setProperty("--ry", ((x - 0.5) * 14).toFixed(2) + "deg");
-        card.style.setProperty("--rx", ((0.5 - y) * 10).toFixed(2) + "deg");
-        card.style.setProperty("--gx", (x * 100).toFixed(1) + "%");
-        card.style.setProperty("--gy", (y * 100).toFixed(1) + "%");
-      });
-      card.addEventListener("pointerleave", function () {
-        card.style.setProperty("--ry", "0deg");
-        card.style.setProperty("--rx", "0deg");
-      });
-    });
-  }
 
   /* ---------- Vídeo: progresso, mini player e tela final ---------- */
   var watch = document.querySelector("[data-watch]");
@@ -171,7 +98,6 @@
     var dock = playing && !wrapVisible && !dockDismissed;
     frame.classList.toggle("is-docked", dock);
     if (videoWrap) videoWrap.classList.toggle("is-docking", dock);
-    if (!dock) onScroll();
   }
 
   if (videoWrap && "IntersectionObserver" in window) {
@@ -210,68 +136,22 @@
     updateDock();
   });
 
-  /* ---------- Etapas + mockup ---------- */
+  /* ---------- Etapas: o celular ilustra a etapa escolhida ---------- */
   var stepsRoot = document.querySelector("[data-steps]");
   if (stepsRoot) {
-    var list = stepsRoot.querySelector(".steps");
     var buttons = stepsRoot.querySelectorAll("[data-step]");
-    var chips = stepsRoot.querySelectorAll("[data-chip]");
     var screen = stepsRoot.querySelector("[data-phone-step]");
-    var counters = stepsRoot.querySelectorAll("[data-count]");
-    var counted = false;
-    var current = 1;
-    var timer = null;
-
-    var countUp = function () {
-      if (counted) return;
-      counted = true;
-      counters.forEach(function (el) {
-        var target = parseInt(el.getAttribute("data-count"), 10);
-        if (reduceMotion) { el.textContent = target.toLocaleString("pt-BR"); return; }
-        var start = null;
-        var step = function (t) {
-          if (!start) start = t;
-          var p = Math.min((t - start) / 1400, 1);
-          el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))).toLocaleString("pt-BR");
-          if (p < 1) requestAnimationFrame(step);
-        };
-        requestAnimationFrame(step);
-      });
-    };
-
     var activate = function (n) {
-      current = n;
       buttons.forEach(function (b) {
         var on = Number(b.getAttribute("data-step")) === n;
         b.classList.toggle("is-active", on);
-        b.setAttribute("aria-selected", on ? "true" : "false");
+        b.setAttribute("aria-pressed", on ? "true" : "false");
       });
-      chips.forEach(function (c) { c.classList.toggle("is-on", Number(c.getAttribute("data-chip")) === n); });
       screen.setAttribute("data-phone-step", String(n));
-      if (n >= 2) countUp();
     };
-
-    var stop = function () { clearInterval(timer); timer = null; list.classList.remove("is-auto"); };
-    var start = function () {
-      if (reduceMotion || timer) return;
-      list.classList.add("is-auto");
-      timer = setInterval(function () { activate(current % buttons.length + 1); }, 4500);
-    };
-
     buttons.forEach(function (b) {
-      b.addEventListener("click", function () {
-        stop();
-        activate(Number(b.getAttribute("data-step")));
-      });
+      b.addEventListener("click", function () { activate(Number(b.getAttribute("data-step"))); });
     });
-
     activate(1);
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) start(); else stop();
-        });
-      }, { threshold: 0.4 }).observe(stepsRoot);
-    }
   }
 })();
