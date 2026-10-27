@@ -136,22 +136,4 @@
     updateDock();
   });
 
-  /* ---------- Etapas: o celular ilustra a etapa escolhida ---------- */
-  var stepsRoot = document.querySelector("[data-steps]");
-  if (stepsRoot) {
-    var buttons = stepsRoot.querySelectorAll("[data-step]");
-    var screen = stepsRoot.querySelector("[data-phone-step]");
-    var activate = function (n) {
-      buttons.forEach(function (b) {
-        var on = Number(b.getAttribute("data-step")) === n;
-        b.classList.toggle("is-active", on);
-        b.setAttribute("aria-pressed", on ? "true" : "false");
-      });
-      screen.setAttribute("data-phone-step", String(n));
-    };
-    buttons.forEach(function (b) {
-      b.addEventListener("click", function () { activate(Number(b.getAttribute("data-step"))); });
-    });
-    activate(1);
-  }
 })();
