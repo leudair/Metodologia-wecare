@@ -212,6 +212,11 @@ h1, h2, h3 { text-wrap: balance; }
 .watch__text { margin: 0; font-size: 15px; color: var(--gray); font-variant-numeric: tabular-nums; }
 .watch.is-done .watch__text { color: var(--white); }
 
+/* ---------- Sigilo ---------- */
+.privacy { display: grid; grid-template-columns: 1fr 1.15fr; gap: clamp(28px, 6vw, 96px); align-items: start; }
+.privacy__text { display: grid; gap: 20px; justify-items: start; }
+.privacy__text .btn { margin-top: 8px; }
+
 /* =========================================================
    Conceito
    ========================================================= */
@@ -359,6 +364,7 @@ h1, h2, h3 { text-wrap: balance; }
   .about { grid-template-columns: 1fr; }
   .pillars { grid-template-columns: 1fr; gap: 36px; }
   .faq { grid-template-columns: 1fr; }
+  .privacy { grid-template-columns: 1fr; }
   .faq__head { position: static; }
 }
 
