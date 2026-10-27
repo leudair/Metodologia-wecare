@@ -78,20 +78,24 @@ h1, h2, h3 { text-wrap: balance; }
 }
 .btn--primary:hover { background: linear-gradient(180deg, #E6343B 0%, var(--red-hi) 55%, #B9151C 100%); }
 .btn--primary:active { transform: translateY(4px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 0 0 #6E0A0E, 0 2px 6px rgba(0, 0, 0, .45); }
-/* botão nas cores da logo: vinho brilhante com filete cobre aceso em volta */
+/* botão com as cores medidas na logo:
+   vinho #670202 (face do "Wecare"), brilho #A01818 e cobre #C5695B / #E88D78 (bordas e "AGÊNCIA") */
 .btn--led {
-  color: #FFF4EC; font-weight: 700; text-shadow: 0 1px 1px rgba(0, 0, 0, .35);
-  background: linear-gradient(180deg, #B3262A 0%, #8E1216 45%, #6A0609 100%);
-  border-color: #DA826A;
+  color: #F6CDBB; font-weight: 700; text-shadow: 0 1px 1px rgba(0, 0, 0, .45);
+  background: linear-gradient(180deg, #A01818 0%, #7A0A0A 42%, #670202 62%, #540101 100%);
+  border: 1.5px solid #C5695B;
   box-shadow:
-    0 0 0 1px rgba(218, 130, 106, .55), 0 0 10px rgba(218, 130, 106, .55), 0 0 22px rgba(196, 22, 28, .35),
-    inset 0 1px 0 rgba(255, 210, 190, .45), 0 4px 0 #3E0306, 0 8px 16px rgba(0, 0, 0, .5);
+    inset 0 0 0 1px rgba(232, 141, 120, .35), inset 0 1px 0 rgba(255, 200, 180, .5),
+    0 0 8px rgba(232, 141, 120, .55), 0 0 18px rgba(197, 105, 91, .35),
+    0 4px 0 #330000, 0 8px 16px rgba(0, 0, 0, .5);
 }
-.btn--led:hover { background: linear-gradient(180deg, #C12E32 0%, #9C171B 45%, #74080C 100%); }
+.btn--led:hover { background: linear-gradient(180deg, #AE1F1F 0%, #860D0D 42%, #700303 62%, #5C0101 100%); }
 .btn--led:active {
   transform: translateY(4px);
-  box-shadow: 0 0 0 1px rgba(218, 130, 106, .55), 0 0 10px rgba(218, 130, 106, .55), 0 0 22px rgba(196, 22, 28, .35),
-    inset 0 1px 0 rgba(255, 210, 190, .35), 0 0 0 #3E0306, 0 2px 6px rgba(0, 0, 0, .5);
+  box-shadow:
+    inset 0 0 0 1px rgba(232, 141, 120, .35), inset 0 1px 0 rgba(255, 200, 180, .4),
+    0 0 8px rgba(232, 141, 120, .55), 0 0 18px rgba(197, 105, 91, .35),
+    0 0 0 #330000, 0 2px 6px rgba(0, 0, 0, .5);
 }
 .btn--ghost { border-color: rgba(245, 245, 247, 0.3); color: var(--white); background: transparent; }
 .btn--ghost:hover { border-color: var(--white); }
