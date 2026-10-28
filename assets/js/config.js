@@ -16,7 +16,7 @@ window.WECARE_CONFIG = {
   //   html5   -> src: URL do MP4 (H.264/AAC) hospedado em CDN
   video: {
     provider: "youtube",
-    id: "WuNn1HCH6HU", // https://youtu.be/WuNn1HCH6HU (não listado, 14:38)
+    id: "8Kf9VPr3VYw", // https://youtu.be/8Kf9VPr3VYw
     src: "",
     poster: "assets/img/video-poster.jpg",
     title: "Apresentação da Metodologia WeCare",
