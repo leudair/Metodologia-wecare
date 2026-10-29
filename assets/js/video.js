@@ -125,11 +125,13 @@
       var player = new window.YT.Player(holder, {
         videoId: cfg.id,
         host: "https://www.youtube-nocookie.com",
-        playerVars: { autoplay: 1, rel: 0, modestbranding: 1, playsinline: 1 },
+        playerVars: { autoplay: 1, rel: 0, modestbranding: 1, playsinline: 1, cc_load_policy: 0, iv_load_policy: 3 },
         events: {
           onStateChange: function (e) {
             var S = window.YT.PlayerState;
             if (e.data === S.PLAYING) {
+              // o vídeo já tem legenda na própria imagem: desliga a legenda automática do YouTube
+              try { player.unloadModule("captions"); player.unloadModule("cc"); } catch (err) {}
               progress.play();
               progress.tick(player.getCurrentTime(), player.getDuration()); // marca o ponto de partida
               clearInterval(timer);
