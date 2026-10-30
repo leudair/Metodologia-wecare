@@ -9,6 +9,18 @@ window.WECARE_CONFIG = {
     message: "Olá, tudo bem? Conheci a Metodologia WeCare pelo site e gostaria de aplicar no meu perfil."
   },
 
+  // Representantes: cada um tem a própria página (ex.: metodologiawecare.com.br/w1)
+  // com os botões de WhatsApp apontando para o número dele.
+  reps: {
+    w1:  { name: "Eduarda",  number: "5547991468649" },
+    w2:  { name: "Cláudia",  number: "5547996010374" },
+    w3:  { name: "Diana",    number: "5547997890131" },
+    w6:  { name: "Patrícia", number: "5547997016159" },
+    w7:  { name: "Adriana",  number: "5547991314631" },
+    w9:  { name: "Alanis",   number: "5547991982780" },
+    w11: { name: "Flávia",   number: "5547992414060" }
+  },
+
   // Vídeo principal
   // provider: "youtube" | "vimeo" | "html5"
   //   youtube -> id: ID do vídeo (ex.: "dQw4w9WgXcQ")

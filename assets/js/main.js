@@ -31,8 +31,31 @@
   });
   document.querySelectorAll("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
 
-  /* ---------- WhatsApp ---------- */
+  /* ---------- Representante (/w1, /w2...) ---------- */
+  var reps = cfg.reps || {};
+  var repKey = (location.pathname.match(/^\/(w\d+)\/?$/i) || [])[1];
+  repKey = repKey && repKey.toLowerCase();
+  try {
+    if (reps[repKey]) sessionStorage.setItem("wecare_rep", repKey);
+    // voltando das páginas legais, mantém o representante da visita
+    else if (document.referrer.indexOf(location.origin) === 0) repKey = sessionStorage.getItem("wecare_rep");
+  } catch (e) {}
+  var rep = reps[repKey] || null;
+  window.WECARE_REP = rep ? repKey : "";
+
   var wa = cfg.whatsapp || {};
+  if (rep) {
+    wa = { number: rep.number, message: wa.message };
+    document.querySelectorAll("[data-rep]").forEach(function (el) {
+      el.querySelector("[data-rep-name]").textContent = rep.name;
+      el.hidden = false;
+    });
+    document.querySelectorAll("[data-wa].btn").forEach(function (a) {
+      a.textContent = "Falar com " + rep.name;
+    });
+  }
+
+  /* ---------- WhatsApp ---------- */
   document.querySelectorAll("[data-wa]").forEach(function (a) {
     if (wa.number) {
       a.href = "https://wa.me/" + wa.number.replace(/\D/g, "") + "?text=" + encodeURIComponent(wa.message || "");
@@ -45,7 +68,8 @@
       if (!window.WeCareTrack) return;
       window.WeCareTrack.track("Contact", {
         content_name: "Metodologia WeCare",
-        origin: a.getAttribute("data-wa-origin") || ""
+        origin: a.getAttribute("data-wa-origin") || "",
+        rep: window.WECARE_REP
       }, { standard: true });
     });
   });
