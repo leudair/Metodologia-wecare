@@ -1,6 +1,6 @@
 {
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/:rep(w[0-9]+)", "destination": "/index.html" }
+    { "source": "/:rep([wW][0-9]+)", "destination": "/index.html" }
   ]
 }
