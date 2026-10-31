@@ -30,7 +30,7 @@ window.WECARE_CONFIG = {
     provider: "youtube",
     id: "8Kf9VPr3VYw", // https://youtu.be/8Kf9VPr3VYw
     src: "",
-    poster: "assets/img/video-poster.jpg",
+    poster: "youtube", // "youtube" = usa a miniatura do vídeo; ou o caminho de uma imagem
     title: "Apresentação da Metodologia WeCare",
 
     // Versão em pé (9:16), exibida no celular na vertical. Deixe id vazio para usar a horizontal em todos.

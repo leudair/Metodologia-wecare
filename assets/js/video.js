@@ -184,7 +184,16 @@
       var wrap = frame.closest("[data-video-wrap]");
       if (wrap) wrap.classList.add("video--vertical");
     }
-    if (cfg.poster && poster) poster.src = cfg.poster;
+    if (poster && cfg.provider === "youtube" && cfg.id && (!cfg.poster || cfg.poster === "youtube")) {
+      // capa = miniatura do próprio vídeo no YouTube (alta resolução, com reserva menor)
+      var base = "https://i.ytimg.com/vi/" + encodeURIComponent(cfg.id) + "/";
+      poster.addEventListener("load", function onLoad() {
+        // vídeo sem versão maxres: o YouTube devolve um quadro cinza de 120px
+        if (poster.naturalWidth <= 120) { poster.removeEventListener("load", onLoad); poster.src = base + "hqdefault.jpg"; }
+      });
+      poster.src = base + "maxresdefault.jpg";
+      frame.classList.add("has-thumb");
+    } else if (cfg.poster && poster) poster.src = cfg.poster;
     if (poster) poster.addEventListener("error", function () { poster.remove(); });
 
     if (!isConfigured()) {
