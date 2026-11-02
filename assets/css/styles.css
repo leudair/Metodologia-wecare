@@ -338,6 +338,18 @@ h1, h2, h3 { text-wrap: balance; }
 .footer__legal { margin: 0; font-size: 13px; color: var(--gray); }
 
 /* ---------- Consentimento ---------- */
+/* WhatsApp flutuante */
+.wa-float {
+  position: fixed; z-index: 60; right: max(18px, env(safe-area-inset-right, 0px)); bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center;
+  background: #25D366; color: #fff; box-shadow: 0 6px 20px rgba(0,0,0,.45);
+  transition: transform .2s, background-color .2s;
+}
+.wa-float:hover { background: #1EBE5B; transform: scale(1.06); }
+.wa-float:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+/* o mini player fica acima do botão */
+.video__frame.is-docked { bottom: calc(90px + env(safe-area-inset-bottom, 0px)); }
+
 .consent {
   position: fixed; z-index: 80; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
   width: calc(100% - 32px); max-width: 680px; padding: 20px 22px;
